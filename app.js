@@ -10,20 +10,16 @@ app.listen(3000);
 
 
 app.get('/', (req, res) => {
-      res.render("index");
+      res.render("index", {title: 'Welcome'});
 });
 
 app.get('/about', (req, res) => {
-    res.render("about");
-})
-
-app.get('/about', (req, res) => {
-    res.render("about");
+    res.render("about", {title: 'About Us'});
 })
 
 // redirects
 app.get('/blogs/create', (req, res) => {
-    res.render('create');
+    res.render('create', {title: 'Lets Write!'});
 })
 
 // 404 page
