@@ -1,8 +1,17 @@
 const express = require('express');
 
+const mongoose = require('mongoose');
+
 //initailize Express App
 const app = express(); 
 
+//connect to MongoDB
+mongoose.set('strictQuery', false);
+const dbURI = "mongodb+srv://chiemelie:aris1234@blurga.3v2bvt3.mongodb.net/blurga?retryWrites=true&w=majority";
+mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(result => {
+        console.log('connected to db');
+    }).catch(err => console.log(err));
 app.set('view engine', 'ejs')
 
 // listening on port 3000
