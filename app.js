@@ -8,9 +8,15 @@ app.set('view engine', 'ejs')
 // listening on port 3000
 app.listen(3000);
 
+//middleware & static files
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-      res.render("index", {title: 'Welcome'});
+    res.render("index", {title: 'Welcome'});
+});
+
+app.get('/home', (req, res) => {
+    res.render("index", {title: 'Welcome'});
 });
 
 app.get('/about', (req, res) => {
@@ -18,7 +24,12 @@ app.get('/about', (req, res) => {
 })
 
 // redirects
-app.get('/blogs/create', (req, res) => {
+app.get('/blogs/write', (req, res) => {
+    res.render('create', {title: 'Lets Write!'});
+})
+
+// redirects
+app.get('/write', (req, res) => {
     res.render('create', {title: 'Lets Write!'});
 })
 
