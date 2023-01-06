@@ -2,23 +2,38 @@ const express = require('express');
 
 const mongoose = require('mongoose');
 
+const Blog = require('./models/blog');
+
 //initailize Express App
 const app = express(); 
 
 //connect to MongoDB
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery',true);
 const dbURI = "mongodb+srv://chiemelie:aris1234@blurga.3v2bvt3.mongodb.net/blurga?retryWrites=true&w=majority";
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(dbURI)
     .then(result => {
-        console.log('connected to db');
+        app.listen(3000);
     }).catch(err => console.log(err));
-app.set('view engine', 'ejs')
 
-// listening on port 3000
-app.listen(3000);
+// adding the express view engine    
+app.set('view engine', 'ejs');
 
 //middleware & static files
-app.use(express.static('public'))
+app.use(express.static('public'));
+
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog({
+        title: 'Chiemelie blog',
+        snippet: 'I wanna try this stuff out',
+        body: 'I wrote this one myself'
+    });
+    blog.save() 
+    .then(result => {
+        res.send(result)
+    }).catch(err => {
+        console.log(err);
+    })
+})
 
 app.get('/', (req, res) => {
     res.render("index", {title: 'Welcome'});
@@ -44,5 +59,5 @@ app.get('/write', (req, res) => {
 
 // 404 page
 app.use((req, res) =>{
-    res.status(404).render("404");
+    res.status(404).render("404", {title: 'Page was not found'});
 })
