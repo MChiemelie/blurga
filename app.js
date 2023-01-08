@@ -23,9 +23,9 @@ app.use(express.static('public'));
 
 app.get('/add-blog', (req, res) => {
     const blog = new Blog({
-        title: 'Chiemelie blog',
-        snippet: 'I wanna try this stuff out',
-        body: 'I wrote this one myself'
+        title: 'Chiemelie Second blog',
+        snippet: 'Second attempt',
+        body: 'I want to try this out again to know if it woyuld still would'
     });
     blog.save() 
     .then(result => {
