@@ -1,3 +1,4 @@
+const { render } = require('ejs');
 const express = require('express');
 
 const mongoose = require('mongoose');
@@ -13,7 +14,8 @@ const dbURI = "mongodb+srv://chiemelie:aris1234@blurga.3v2bvt3.mongodb.net/blurg
 mongoose.connect(dbURI)
     .then(result => {
         app.listen(3000);
-    }).catch(err => console.log(err));
+        console.log('connected');
+}).catch(err => {console.log(err)});
 
 // adding the express view engine    
 app.set('view engine', 'ejs');
@@ -21,31 +23,24 @@ app.set('view engine', 'ejs');
 //middleware & static files
 app.use(express.static('public'));
 
-app.get('/add-blog', (req, res) => {
-    const blog = new Blog({
-        title: 'Chiemelie Second blog',
-        snippet: 'Second attempt',
-        body: 'I want to try this out again to know if it woyuld still would'
-    });
-    blog.save() 
-    .then(result => {
-        res.send(result)
-    }).catch(err => {
-        console.log(err);
-    })
-})
-
+// basic routes
 app.get('/', (req, res) => {
-    res.render("index", {title: 'Welcome'});
-});
-
-app.get('/home', (req, res) => {
-    res.render("index", {title: 'Welcome'});
+    res.redirect('/blogs');
 });
 
 app.get('/about', (req, res) => {
     res.render("about", {title: 'About Us'});
 })
+
+//blog routes
+app.get('/blogs', (req, res) => {
+    Blog.find()
+    .then(result => {
+        res.render('index', { title: 'Welcome', blogs: result });
+    }).catch (error => {
+     console.log(error);   
+    });
+});
 
 // redirects
 app.get('/blogs/write', (req, res) => {
@@ -61,3 +56,37 @@ app.get('/write', (req, res) => {
 app.use((req, res) =>{
     res.status(404).render("404", {title: 'Page was not found'});
 })
+
+// (// get a blog
+// app.get('/single-blog', (req, res) => {
+//     Blog.findById('63ba64dd2c6e24bd4d9509e1')
+//     .then(result => {
+//         res.send(result);
+//     }).catch(err => {
+//         console.log(err);
+//     })
+// })
+
+// //get all the blogs
+// app.get('/all-blogs', (req, res) => {
+//     Blog.find()
+//     .then(result => {
+//         res.send(result);
+//     }).catch(err => {
+//         console.log(err);
+//     })
+// })
+// app.get('/add-blog', (req, res) => {
+//     const blog = new Blog({
+//         title: 'Chiemelie Third blog',
+//         snippet: 'Third attempt',
+//         body: 'I want to ssee how this thing really works'
+//     });
+//     blog.save() 
+//     .then(result => {
+//         res.send(result)
+//     }).catch(err => {
+//         console.log(err);
+//     })
+// });
+// )
