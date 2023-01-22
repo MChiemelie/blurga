@@ -4,5 +4,8 @@
  "scm.inputFontSize": 10,
  "debug.console.fontFamily": "cursive",
  "markdown.preview.fontSize": 10,
- "terminal.integrated.fontSize": 10
+ "terminal.integrated.fontSize": 10,
+ "workbench.activityBar.iconClickBehavior": "focus",
+ "editor.fontLigatures": false,
+ "editor.fontVariations": false
 }

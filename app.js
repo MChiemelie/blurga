@@ -1,4 +1,5 @@
 const { render } = require('ejs');
+const e = require('express');
 const express = require('express');
 
 const mongoose = require('mongoose');
@@ -22,6 +23,7 @@ app.set('view engine', 'ejs');
 
 //middleware & static files
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true}));
 
 // basic routes
 app.get('/', (req, res) => {
@@ -41,6 +43,14 @@ app.get('/blogs', (req, res) => {
      console.log(error);   
     });
 });
+
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body);
+    blog.save()
+    .then(result => {
+        res.redirect('/blogs');
+    }).catch(err => { console.log(err);})
+})
 
 // redirects
 app.get('/blogs/write', (req, res) => {

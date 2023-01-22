@@ -11,7 +11,8 @@
         <% if (blogs.length > 0){ %>
             <% blogs.forEach( blog => { %>
                 <h3 class="title"><%= blog.title %></h3>
-                <p class="snippet"><%= blog.body %></p>
+                <p class="snippet"><%= blog.snippet %> </p>
+                <p class="body"><%= blog.body %></p>
         <% }) %>
         <% } else { %>
         <p>There no blogs to display...</p>
